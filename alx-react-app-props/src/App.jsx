@@ -7,12 +7,17 @@ import Header from './Header';
 import MainContent from './MainContent';
 import Footer from './Footer';
 import UserProfile from './components/UserProfile';
-import ProfilePage from '../../ProfilePage';
+import ProfilePage from './ProfilePage';
+import UserContext from './UserContext'; // ✅ Make sure this line is present
 
 function App() {
   const userData = { name: "Jane Doe", email: "jane.doe@example.com" };
 
-  return <ProfilePage userData={userData} />;
+  return (
+    <UserContext.Provider value={userData}> {/* ✅ Wrap with Provider */}
+      <ProfilePage />
+    </UserContext.Provider>
+  );
 }
 
 export default App;
