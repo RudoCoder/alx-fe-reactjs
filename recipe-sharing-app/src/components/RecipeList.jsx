@@ -2,7 +2,7 @@ import React from 'react';
 import useRecipeStore from '../store/recipeStore';
 
 const RecipeList = () => {
-  const filteredRecipes = useRecipeStore((state) => state.filteredRecipes);
+  const filteredRecipes = useRecipeStore((state) => state.recipes);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
