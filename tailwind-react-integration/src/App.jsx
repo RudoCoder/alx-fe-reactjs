@@ -2,11 +2,14 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import UserProfile from "./UserProfile";
 
-export default function App() {
+function App() {
   return (
-    <h1 className="text-4xl font-bold text-blue-500">
-      Hello Tailwind + React!
-    </h1>
-  )
+    <div className="min-h-screen bg-white flex items-center justify-center">
+      <UserProfile />
+    </div>
+  );
 }
+
+export default App;
