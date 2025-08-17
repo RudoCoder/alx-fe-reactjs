@@ -6,27 +6,28 @@ function AddRecipeForm() {
   const [steps, setSteps] = useState("");
   const [errors, setErrors] = useState({});
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // Simple validation
+  // Validation helper
+  const validate = () => {
     const newErrors = {};
     if (!title.trim()) newErrors.title = "Title is required";
     if (!ingredients.trim() || ingredients.split(",").length < 2)
-      newErrors.ingredients = "Please provide at least 2 ingredients, separated by commas";
+      newErrors.ingredients = "Provide at least 2 ingredients, separated by commas";
     if (!steps.trim()) newErrors.steps = "Preparation steps are required";
+    return newErrors;
+  };
 
-    setErrors(newErrors);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const validationErrors = validate();
+    setErrors(validationErrors);
 
-    if (Object.keys(newErrors).length === 0) {
-      // For now just log the data
+    if (Object.keys(validationErrors).length === 0) {
       console.log({
         title,
         ingredients: ingredients.split(",").map((i) => i.trim()),
         steps,
       });
 
-      // Reset form
       setTitle("");
       setIngredients("");
       setSteps("");
@@ -38,7 +39,6 @@ function AddRecipeForm() {
     <div className="max-w-3xl mx-auto p-6 bg-white rounded-2xl shadow-md mt-6">
       <h2 className="text-2xl font-bold mb-4 text-center">Add New Recipe</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Title */}
         <div>
           <label className="block font-semibold mb-1">Recipe Title</label>
           <input
@@ -50,8 +50,6 @@ function AddRecipeForm() {
           />
           {errors.title && <p className="text-red-500 text-sm mt-1">{errors.title}</p>}
         </div>
-
-        {/* Ingredients */}
         <div>
           <label className="block font-semibold mb-1">Ingredients (comma separated)</label>
           <textarea
@@ -61,12 +59,8 @@ function AddRecipeForm() {
             placeholder="E.g., 2 eggs, 1 cup flour, 1/2 cup sugar"
             rows={3}
           />
-          {errors.ingredients && (
-            <p className="text-red-500 text-sm mt-1">{errors.ingredients}</p>
-          )}
+          {errors.ingredients && <p className="text-red-500 text-sm mt-1">{errors.ingredients}</p>}
         </div>
-
-        {/* Preparation Steps */}
         <div>
           <label className="block font-semibold mb-1">Preparation Steps</label>
           <textarea
@@ -78,8 +72,6 @@ function AddRecipeForm() {
           />
           {errors.steps && <p className="text-red-500 text-sm mt-1">{errors.steps}</p>}
         </div>
-
-        {/* Submit Button */}
         <button
           type="submit"
           className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors"

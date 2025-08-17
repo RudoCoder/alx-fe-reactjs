@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./components/HomePage";
-import AddRecipePage from "./components/AddRecipePage";
-import RecipeDetailPage from "./components/RecipeDetailPage";
+import RecipeDetail from "./components/RecipeDetail";
+import AddRecipeForm from "./components/AddRecipeForm";
 
 function App() {
   return (
@@ -14,3 +14,5 @@ function App() {
     </Router>
   );
 }
+
+export default App;
