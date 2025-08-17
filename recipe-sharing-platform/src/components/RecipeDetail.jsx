@@ -8,19 +8,17 @@ function RecipeDetail() {
 
   useEffect(() => {
     const found = data.find((r) => r.id === parseInt(id));
-    setRecipe(found || null);
+    if (found) {
+      setRecipe(found);
+    }
   }, [id]);
 
-  if (!recipe) return <p className="text-center mt-6">Recipe not found</p>;
+  if (!recipe) return <p className="mt-6">Recipe not found</p>;
 
   return (
     <div className="max-w-4xl mx-auto p-6">
       <h1 className="text-3xl font-bold mb-4">{recipe.title}</h1>
-      <img
-        src={recipe.image}
-        alt={recipe.title}
-        className="w-full h-64 object-cover rounded-lg mb-6"
-      />
+      <p className="text-gray-700 mb-6">{recipe.summary}</p>
 
       <section className="mb-6">
         <h2 className="text-2xl font-semibold mb-2">Ingredients</h2>
