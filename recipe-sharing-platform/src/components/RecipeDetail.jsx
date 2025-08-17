@@ -8,22 +8,25 @@ function RecipeDetail() {
 
   useEffect(() => {
     const found = data.find((r) => r.id === parseInt(id));
-    if (found) {
-      setRecipe(found);
-    }
+    if (found) setRecipe(found);
   }, [id]);
 
-  if (!recipe) return <p className="mt-6">Recipe not found</p>;
+  if (!recipe) return <p className="text-center mt-6">Recipe not found</p>;
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-4">{recipe.title}</h1>
-      <p className="text-gray-700 mb-6">{recipe.summary}</p>
+    <div className="max-w-4xl mx-auto p-6 space-y-6">
+      <img
+        src={recipe.image}
+        alt={recipe.title}
+        className="w-64 h-64 object-cover rounded-lg mx-auto"
+      />
+      <h1 className="text-3xl font-bold">{recipe.title}</h1>
+      <p className="text-gray-700">{recipe.summary}</p>
 
-      <section className="mb-6">
+      <section>
         <h2 className="text-2xl font-semibold mb-2">Ingredients</h2>
         <ul className="list-disc list-inside text-gray-700">
-          {recipe.ingredients?.map((item, index) => (
+          {recipe.ingredients.map((item, index) => (
             <li key={index}>{item}</li>
           ))}
         </ul>
@@ -31,11 +34,9 @@ function RecipeDetail() {
 
       <section>
         <h2 className="text-2xl font-semibold mb-2">Preparation Steps</h2>
-        <ol className="list-decimal list-inside text-gray-700">
-          {recipe.instructions?.map((step, index) => (
-            <li key={index} className="mb-2">
-              {step}
-            </li>
+        <ol className="list-decimal list-inside text-gray-700 space-y-1">
+          {recipe.instructions.map((step, index) => (
+            <li key={index}>{step}</li>
           ))}
         </ol>
       </section>

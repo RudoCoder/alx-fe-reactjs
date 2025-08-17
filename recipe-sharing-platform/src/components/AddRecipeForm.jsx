@@ -6,7 +6,6 @@ function AddRecipeForm() {
   const [steps, setSteps] = useState("");
   const [errors, setErrors] = useState({});
 
-  // Validation helper
   const validate = () => {
     const newErrors = {};
     if (!title.trim()) newErrors.title = "Title is required";
@@ -27,7 +26,6 @@ function AddRecipeForm() {
         ingredients: ingredients.split(",").map((i) => i.trim()),
         steps,
       });
-
       setTitle("");
       setIngredients("");
       setSteps("");
