@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import TodoList from "../components/TodoList";
+import TodoList from "../TodoList";
 
 describe("TodoList Component", () => {
   test("renders initial todos", () => {
@@ -11,9 +11,10 @@ describe("TodoList Component", () => {
 
   test("adds a new todo", () => {
     render(<TodoList />);
-    const input = screen.getByPlaceholderText(/Add new todo/i);
+    const input = screen.getByTestId("todo-input");
+    const form = screen.getByTestId("add-todo-form");
     fireEvent.change(input, { target: { value: "New Todo" } });
-    fireEvent.submit(input.closest("form"));
+    fireEvent.submit(form);
     expect(screen.getByText(/New Todo/i)).toBeInTheDocument();
   });
 
@@ -26,7 +27,7 @@ describe("TodoList Component", () => {
 
   test("deletes a todo", () => {
     render(<TodoList />);
-    const deleteBtn = screen.getAllByText("X")[0];
+    const deleteBtn = screen.getByTestId("delete-1");
     fireEvent.click(deleteBtn);
     expect(screen.queryByText(/Learn React/i)).not.toBeInTheDocument();
   });
