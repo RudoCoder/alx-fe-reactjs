@@ -1,51 +1,44 @@
+// src/components/PostsComponent.jsx
+import React from "react";
 import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
-// Fetch function
 const fetchPosts = async () => {
-  const res = await fetch("https://jsonplaceholder.typicode.com/posts");
-  if (!res.ok) throw new Error("Failed to fetch posts");
-  return res.json();
+  const { data } = await axios.get("https://jsonplaceholder.typicode.com/posts");
+  return data;
 };
 
-function PostsComponent() {
-  // useQuery hook for fetching posts
+const PostsComponent = () => {
   const {
     data: posts,
     isLoading,
     isError,
     error,
-    refetch,
     isFetching,
   } = useQuery({
-    queryKey: ["posts"], // cache key
+    queryKey: ["posts"],
     queryFn: fetchPosts,
-    staleTime: 5000, // data considered fresh for 5s
-    cacheTime: 1000 * 60 * 5, // cache for 5 minutes
+    refetchOnWindowFocus: false,   // prevents auto refetch when switching tabs
+    keepPreviousData: true,        // keeps previous data during background refetch
   });
 
   if (isLoading) return <p>Loading posts...</p>;
-  if (isError) return <p className="text-red-500">Error: {error.message}</p>;
+  if (isError) return <p>Error: {error.message}</p>;
 
   return (
-    <div>
-      <button
-        onClick={() => refetch()}
-        className="bg-blue-600 text-white px-4 py-2 rounded mb-4"
-        disabled={isFetching}
-      >
-        {isFetching ? "Refreshing..." : "Refetch Posts"}
-      </button>
-
+    <div className="p-4">
+      <h2 className="text-xl font-bold mb-2">Posts</h2>
+      {isFetching && <p className="text-sm text-gray-500">Updating...</p>}
       <ul className="space-y-2">
-        {posts.slice(0, 10).map((post) => (
-          <li key={post.id} className="border p-3 rounded shadow">
+        {posts.map((post) => (
+          <li key={post.id} className="border p-2 rounded">
             <h3 className="font-semibold">{post.title}</h3>
-            <p>{post.body}</p>
+            <p className="text-gray-700">{post.body}</p>
           </li>
         ))}
       </ul>
     </div>
   );
-}
+};
 
 export default PostsComponent;

@@ -1,11 +1,14 @@
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import PostsComponent from "./components/PostsComponent";
 
-<QueryClientProvider client={queryClient}>
-  <div className="p-6">
-    <h1 className="text-2xl font-bold mb-4">React Query Demo</h1>
-    <PostsComponent />
-  </div>
-  <ReactQueryDevtools initialIsOpen={false} />
-</QueryClientProvider>
+const queryClient = new QueryClient();
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <App />
+    </QueryClientProvider>
+  </React.StrictMode>
+);
 
 export default App;
