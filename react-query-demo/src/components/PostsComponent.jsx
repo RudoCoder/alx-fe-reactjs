@@ -15,13 +15,14 @@ const PostsComponent = () => {
     isError,
     error,
     isFetching,
+    refetch, // <-- gives us manual refetch control
   } = useQuery({
     queryKey: ["posts"],
     queryFn: fetchPosts,
-    refetchOnWindowFocus: false,  // don't refetch when switching tabs
-    keepPreviousData: true,       // keep old data during refetch
-    staleTime: 1000 * 60 * 1,     // 1 minute -> data considered fresh
-    cacheTime: 1000 * 60 * 5,     // 5 minutes -> unused data stays in cache
+    refetchOnWindowFocus: false,
+    keepPreviousData: true,
+    staleTime: 1000 * 60 * 1, // 1 min fresh
+    cacheTime: 1000 * 60 * 5, // 5 min cache
   });
 
   if (isLoading) return <p>Loading posts...</p>;
@@ -30,7 +31,17 @@ const PostsComponent = () => {
   return (
     <div className="p-4">
       <h2 className="text-xl font-bold mb-2">Posts</h2>
+
+      {/* Refetch button */}
+      <button
+        onClick={() => refetch()}
+        className="mb-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+      >
+        Refresh Posts
+      </button>
+
       {isFetching && <p className="text-sm text-gray-500">Updating...</p>}
+
       <ul className="space-y-2">
         {posts.map((post) => (
           <li key={post.id} className="border p-2 rounded">
